@@ -1,0 +1,434 @@
+CSC480/Fall 2019 Mid-term Report:  Kim Van Vleet and Mary Donahoo
+
+Support Student Retention Efforts Using R Toolkit
+
+One of the most frequently requested data from administrators, faculty, and staff are student retention rates.  These rates are an important indicator of student success and are provided to external agencies and publishers such as U.S. News & World Report for inclusion into their college rankings.  Many factors can influence student retention and institutions spend a great deal of resources on how to capitalize or mitigate the effects of those factors.  The work done to improve student retention comes from many sides including student success and retention committees, regional and national conferences, as well as companies helping institutions improve student retention.  
+Many of the factors that impact student retention have been studied in depth but there are new factors being discovered.  There are also many methods of performing the statistical analysis of the data and providing the information to decision makers in the form of visualizations.  These methods depend on the resources available and skill of the staff that retrieve the data and transform the data into information as well as the effectiveness of the decision makers to apply the information towards improving student retention.  There are an abundance of tools and resources available that can assist institutions perform the process of retrieving data and provide visualizations to support the institution’s student retention efforts.  For this project we used student level data from the Student Management System database and chose to use the program R to perform the visualizations.  It is not a goal of this project to replace any method for supporting student retention but to add a toolkit that can be customized and expanded.
+Table 1 lists the tasks required for this project and shows the process of retrieving the data through the steps in providing meaningful information from R.  Just as important as the working with the data are the instructions and definitions that provide the “data within the data”.  
+
+Table 1.  Task List for Support Student Retention Efforts Using R Toolkit
+ 	Task	Description			
+1.        	SQL Script	
+•	Create SQL script that retrieves student-level data from PowerCampus database
+•	Create data dictionary
+•	Create data descriptions	
+Kim
+2.        	Determine variables 	
+•	Choose variables required by student retention visualizations in R
+•	Select axis labels and titles	
+Kim & Mary
+3.        	R Studio	Setting up an R environment 
+•	Installing R and R Studio on a laptop
+•	Using R Studio in the cloud 	
+Mary
+4.        	R import guide	
+•	Step by step guide to importing the SQL dataset into R
+•	Steps to import data dictionary into working project in RStudio Cloud	M
+ary
+6.        	R Visualizations	
+•	Create some separate R scripts for different types of R visualizations.
+•	Links to R resources and cheat sheets	
+Kim & Mary
+7.        	Shiny App	
+•	Build a Shiny App with a tab set of some example visualizations
+•	Include instructions for how to make the data available and other resources (like images) available to the published Shiny app.
+•	Include the SMU logo and contact information in the left panel – include instructions for updating image and info.
+•	Include a tab for the data dictionary 
+•	Include instructions for 	
+Mary
+
+
+
+The first task is the creation of the SQL script (Appendix 1) that retrieves the student level data from the Student Management System database.  As a SQL code self-learner, writing the query that retrieves the data accurately and formatted in a way that is easily imported into “R” was a little challenging.  Previously working with the data, I would write the query, export the data into Excel, and do the data formatting within Excel.  Because the query used in the project needed to be exported into R with a minimum of re-formatting, I spent time testing each value in each variable represented an actual student attributes especially when the query uses 15 years of data.  For example, some offices practices have changed so the data may not be consistent within the 15 years or a process may have started or ended.  Also, some variables were stored with actual values such as “Undisclosed or Unknown”, a NULL value, or “blank” value.  In some cases, the NULL value represents data that was never entered and a “blank” was a value that was entered but deleted.  Even with “NULL” or “blank” values, it doesn’t tell us if the student wasn’t asked a demographics question or the student selected an answer but the data wasn’t entered.  Other changes that have occurred were new federal race and ethnicity categories mandated in the fall of 2010.  Students who were admitted prior to the fall of 2010 and who selected a race and ethnicity had their selections entered into a specific database table.  Students who were admitted in the fall of 2010 or later and who selected a race and ethnicity had their values stored in another database table.  Because the new race and ethnicity categories required the asking of the leading “Are you Hispanic or Latino” question, institutions were unable to translate the old race and ethnicity values to the new categories.  However, for several semesters, the Institutional Research office sent emails to the non-new students without a race and ethnicity and asked them to log into the student portal and make their selection(s).  This kept the “unknown” data to a minimum.  However, the values for the old and current race and ethnicity categories are stored in two database tables.
+
+Another change that has affected the historical values is the SAT scores.  Before the March of 2016, the SAT consisted of three subject tests:  Mathematic, Critical Reading, and Writing) each with a scoring range of 200 to 800 points for a maximum total of 2,400 points.  Starting in the March of 2016, the SAT consisted of two subject tests:  Mathematics and Evidence-based Reading and Writing again each with a scoring range of 200-800 points but for a maximum total of 1,600 points.  Although each former and current SAT score was given its own separate column in the query output, a possible project extension maybe to add concurrence tables allowing former and current SAT scores to reside together.  
+
+Mary helped me with the difficult coding such as correctly indicating whether a term grade-point-average (GPA) of 0.00 represents students who have failed all of their classes in that term or who withdrew from classes.  An important note is the conscious consideration of the social aspects when working with student data.  For example, students can receive a withdraw grade if they submit the paperwork by the withdrawal deadline.  However, a student who is in the process of failing classes and submits a withdrawal form may be similar to a student who is passing their classes but due to a life event simply leaves school, doesn’t submit a withdraw form, and earns failing final grades.  Hopefully, this is minimized by the institution’s student support systems.  It is these types of questions that need to be considered even with a query that returns exactly the data that was requested.
+
+An important point to make is that the variables chosen for the project were to serve as examples in the toolkit.  These variables are only a small fraction of the other internal and external data  that may impact student retention.  An expansion of this project maybe to create a data warehouse or data mart that contains data found outside of the student management system such as student survey data and financial aid data. 
+
+Within task 1 is a subtask of creating the data dictionary which can be found in appendix 2.   The data dictionary includes information about each variable’s data type and meaning.  Initially, the variable names were created to better describe the data in R but were later shortened to make it easier to work with in R.  Another subtask is the creation of a data descriptions listing found in appendix 3.  We chose to create and maintain a list separate from the data dictionary that includes a description of the data and how it may have changed over time.  While the data dictionary is useful to database administrators and programmers, the data descriptions are geared towards staff that analyze the information.  
+
+For task 2, the types of visualizations and the labels, chart titles and interactive buttons (radio, slider) were discussed and chosen.      
+Task 3 lists the requirements to install R on a laptop.  This task may actually be done later since R is already installed on our computers but not necessarily on the users’ computer.  
+For the second subtask in task 4, Mary provided screenshots that describe the organization of the R application folders and components.
+The code file, app.R, is stored in the main folder for our shiny app, Retention.  Data files are located in the data folder.  Images and PDF are located in the www folder.
+
+
+Mary is working within R and the shinydashboard app while I’m more involved with writing the documentation and guides for the users.  As stated earlier, the project provides a toolkit to help support the student retention.  One of the key points of the project is that it needs to be flexible so that users can manage their own requirements either by expanding the dataset with additional variables or adding external data and creating new visualizations either through programming or changing the filters within the shiny application.  
+In order to be able publish shiny applications, you will need to create an account on shinyapps website, https://www.shinyapps.io/, and then authorize your account using a token and secret.  The shinyapps.io website will guide you through the process of authorizing your account.  This process involves installing the rsconnect package in your RStudio console, generating your token (with secret) on the website, then applying the token command in your RStudio console.  If you’ve previously created a token, you can find in 
+In your RStudio console…
+ 
+To generate your token command, on the website find the Tokens page in the dropdown menu under your name
+ 
+Next, click Add Token button, click the Show Secret button, then click the Copy to clipboard button.  Finally, run the copied command to your RStudio console 
+
+The shiny app is still under construction.  Below is a link to the current version of the app as well and some screen snippets.
+https://mary-donahoo.shinyapps.io/Retention/
+ 
+ 
+Appendix 1 – SQL Query
+
+
+DECLARE @StartingYear varchar(4), @EndingYear varchar(4)
+SET @StartingYear = 2004      -- no earlier than 2004 (messy data)
+SET @EndingYear = 2018       -- no later than 2018 since retention for 2019 cohort will be determined in Fall 2020
+
+SELECT A.People_code_id as [PCID] 
+,P.Last_name AS [LNAME]
+,P.First_name AS [FNAME]
+,A.Academic_year as [YEAR]
+,A.Academic_term AS [TERM]
+,SC.Cohort_id AS [COHORT]
+,CASE WHEN SC.Sub_Cohort_id = 'FULLTIME' THEN 'Fulltime'
+	WHEN SC.Sub_Cohort_id = 'PARTTIME' THEN 'Parttime'
+ 	ELSE 'n/a' END AS [COHORTSTATUS]
+
+-- Gender:  All binary now but it may not be the case in the future
+,CASE WHEN D.Gender = 'F' THEN 'Female'
+	WHEN D.Gender = 'M' THEN 'Male'
+	ELSE COALESCE(D.Gender, 'n/a') END AS [GENDER]
+
+-- Old race/ethnicity categories
+,COALESCE(CE.Long_desc, 'n/a') AS [RE_FORMER]
+
+-- New race/ethnicity categories
+,CASE WHEN IE.Ethnicity = 'AmericanIndianorAlaskaNative' THEN 'Am. Indian/Alaska Native'
+	WHEN IE.Ethnicity = 'BlackorAfricanAmerican' THEN 'Black/African Amer'
+	WHEN IE.Ethnicity = 'Hispanic' THEN 'Hispanic/Latino'
+	WHEN IE.Ethnicity = 'Asian' THEN 'Asian'
+	WHEN IE.Ethnicity = 'MultiEthnic' THEN 'Two or more races'
+	WHEN IE.Ethnicity = 'NativeHawaiianorOtherPacificIslander' THEN 'Hawaiian/Pac Islands'
+	WHEN IE.Ethnicity = 'NonResidentAlien' THEN 'Nonresident alien'
+	WHEN IE.Ethnicity = 'White' THEN 'White'
+	WHEN IE.Ethnicity IS NULL THEN 'Unknown' END AS [RE_CURRENT]
+
+-- First generation; can be "Y" or "y" or NULL (data not entered) or 'Blank' (data entered but then deleted)
+,CASE WHEN UD.First_generation IN ('Y','y') THEN 'Y'
+-- International Office doesn't ask for first generation so incorrectly default to "no" instead of "n/a"
+	WHEN IE.Ethnicity = 'NonResidentAlien' AND D.Visa IS NOT NULL THEN 'n/a'  
+	WHEN UD.First_generation = 'N' THEN 'N' 
+	ELSE 'N' END AS [FIRSTGEN]
+
+,A.Degree AS [DEGREE]   -- at end of first fall term
+
+,CC.Long_Desc AS [MAJOR] -- at end of first fall term
+
+-- STEM program
+,CASE WHEN A.Degree = 'BS' OR A.curriculum IN (
+	'110701',  -- CSC
+	'110103',  -- BSIT
+	'140801',  -- BSCE
+	'141901',  -- BSME
+	'143501',  -- BSIE (Proposed)
+	'260101',  -- BIO
+	'270101',  -- MTH
+	'400501')   -- CHM
+		THEN 'Y' ELSE 'N' END AS [STEM]
+,CV.Long_Desc AS [MILSTATUS]
+,A.Credits AS [INITIALCREDITS]
+
+-- Location at accept
+,COALESCE(LAA.County, 'n/a') AS [COUNTY]
+,COALESCE(LAA.[State], 'n/a') AS [STATE]
+,COALESCE(LAA.Country, 'n/a') AS [COUNTRY] 
+
+-- HS GPA
+,CASE WHEN HS.Gradepoint_average IS NULL THEN 'n/a'
+	WHEN HS.Gradepoint_average = 0 THEN 'n/a'
+	ELSE CONVERT(varchar, HS.Gradepoint_Average) END AS [HSGPA]
+
+-- ACT Scores
+,COALESCE(CONVERT(varchar, T1.ACT_composite), 'n/a') AS [ACT]
+,COALESCE(CONVERT(varchar, T1.SAT_Math), 'n/a') AS [FORMERSATMATH] 
+,COALESCE(CONVERT(varchar, T1.SAT_Reading), 'n/a') AS [FORMERSATREAD]
+,COALESCE(CONVERT(varchar, T1.SAT_Writing), 'n/a') AS [FORMERSATWRIT]
+
+-- New SAT
+,COALESCE(CONVERT(varchar, SAT3.Math), 'n/a') AS [CURRENTSATMATH] 
+,COALESCE(CONVERT(varchar, SAT3.Readw), 'n/a') AS [CURRENTSATEBRW]
+
+-- Academic Index
+,CASE WHEN SC.Cohort_id LIKE 'F0%1xFR' THEN 'n/a' 
+	ELSE COALESCE(UD.Aca_index, 'n/a') END AS [ACAINDEX]
+
+
+-- Pell
+,CASE WHEN [PELL Amount] > 0 THEN 'Y'
+	ELSE 'N' END AS [PELL]
+
+-- WSNG
+,CASE WHEN [WSNG Amount] > 0 THEN 'Y'	
+	ELSE 'N' END AS [WSNG]
+
+-- Resident/Commuter
+,CASE WHEN R.Resident_commuter = 'R' THEN 'Resident'
+	WHEN R.Resident_commuter = 'C' THEN 'Commuter'
+	WHEN R.Resident_Commuter = 'O' THEN 'Other' 
+	ELSE 'n/a' END AS [RESCOM]
+
+
+, CASE WHEN TG.GPA < 0.001 AND EXISTS 
+         (SELECT * FROM TRANSCRIPTDETAIL TD
+          WHERE TD.PEOPLE_CODE_ID = TG.PEOPLE_CODE_ID
+            AND TD.ACADEMIC_YEAR = TG.ACADEMIC_YEAR
+            AND TD.ACADEMIC_TERM = TG.ACADEMIC_TERM
+            AND TD.ADD_DROP_WAIT = 'A'
+            AND TD.FINAL_GRADE IN ('F','XF')) 
+          THEN '0.00' 
+        WHEN TG.GPA < 0.001  -- F/XF not exists is implied
+          THEN 'WD'
+        ELSE CONVERT(varchar,TG.GPA) END AS [Term GPA]
+
+-- Looks for academic record in following year for retained students
+,CASE WHEN A2.[NEXT_YEAR_CREDITS] > 0.00 THEN 'Y'
+	ELSE 'N' END AS [RETAINED]
+
+-- If student has an exclusion date by the end of the fall term in the following year
+,CASE WHEN SC.Exclusion_Date < AC.End_date THEN 'Y'
+	ELSE 'N' END AS [RETEXCLUSION]
+
+FROM Academic    A
+
+JOIN People   P
+ON		A.People_code_id = P.People_code_id
+
+JOIN StudentCohort  SC
+ON		A.People_code_id = SC.People_code_id
+
+LEFT JOIN Demographics  D
+ON		A.People_code_id = D.People_code_id
+AND		A.Academic_year = D.Academic_year
+AND		A.Academic_term = D.Academic_term
+AND		D.Academic_Session = ''
+
+LEFT JOIN Code_ethnicity    CE
+ON		D.Ethnicity = CE.Code_value
+
+LEFT JOIN smu.vw_IPEDSReportingEthnicity    IE
+ON		A.People_code_id = IE.People_code_id
+
+LEFT JOIN Code_curriculum  CC
+ON		A.curriculum = CC.Code_value
+
+LEFT JOIN Code_veteran    CV
+ON		D.Veteran = CV.Code_value
+
+LEFT JOIN UserDefinedInd   UD
+ON		A.People_code_id = UD.People_code_id
+
+LEFT JOIN smu.vw_IR_LocationAtAccept   LAA
+ON		A.People_code_id = LAA.People_code_id
+
+LEFT JOIN smu.vw_ADM_HighSchoolInfo HS
+ON      A.people_code_id = HS.people_code_id 
+
+LEFT JOIN smu.vw_ADM_TestScores   T1
+ON		A.People_code_id = T1. People_code_ID
+
+LEFT JOIN
+		(SELECT A.people_code_id,MAX(M.raw_score) AS [Math], -- removed DISTINCT
+				MAX(R.raw_score) AS [Readw]
+		FROM	Academic  A
+		LEFT JOIN	dbo.TestScores M
+		   ON	A.people_code_id = M.people_code_id
+		   AND	M.test_id = 'SAT3'
+		   AND	M.test_type = 'MATH'
+		   AND M.Raw_score between 200 AND 800
+		LEFT JOIN	dbo.TestScores R
+		   ON	A.people_code_id = R.people_code_id
+		   AND	R.test_id = 'SAT3'
+		   AND	R.test_type = 'READWRIT'
+		   AND R.Raw_score between 200 AND 800
+		WHERE M.people_code_id IS NOT NULL --LIKE '%'
+		   OR R.people_code_id IS NOT NULL -- LIKE '%'
+		GROUP BY A.people_code_id
+		) SAT3
+		ON	A.people_code_id = SAT3.people_code_id
+
+-- Pell Grant
+LEFT JOIN 
+	(SELECT People_org_code_id, Academic_year  --, Academic_term --not joining on term so why include?
+	,SUM(Amount) AS [Pell Amount]
+	FROM ChargeCredit
+	WHERE Charge_credit_code = 'AGRTAPELL'
+	GROUP BY People_org_code_id, academic_year  --, academic_term
+	) PELL
+	ON A.People_code_id = PELL.People_org_code_id
+	AND	SUBSTRING(SC.Cohort_id, 1, 1) = 'F'
+	AND SUBSTRING(SC.Cohort_id, 2, 2) = SUBSTRING(PELL.Academic_year, 3, 2)
+
+-- Washington State Need Grant (changed to Washington College Grant in Fall 2019)
+LEFT JOIN 
+	(SELECT People_org_code_id, Academic_year --, Academic_term -- not joining on term
+	,SUM(Amount) AS [WSNG Amount]
+	FROM ChargeCredit
+	WHERE Charge_credit_code IN ('AGRTAWSNG','PCHKKWSNG','AGRTAWACOL','PCHKAWSNG')
+	GROUP BY People_org_code_id, academic_year  --, academic_term
+	) WSNG
+	ON A.People_code_id = WSNG.People_org_code_id
+	AND	SUBSTRING(SC.Cohort_id, 1, 1) = 'F'
+	AND SUBSTRING(SC.Cohort_id, 2, 2) = SUBSTRING(WSNG.Academic_year, 3, 2)
+
+LEFT JOIN  Residency   R
+    ON	A.People_code_id = R.People_code_id
+    AND	A.Academic_year = R.Academic_year
+    AND	A.Academic_term = R.Academic_term
+    AND	A.Academic_session = R.Academic_session
+
+LEFT JOIN TranscriptGPA TG 
+	ON TG.PEOPLE_CODE_ID = A.PEOPLE_CODE_ID
+	AND TG.ACADEMIC_YEAR = A.ACADEMIC_YEAR
+	AND TG.ACADEMIC_TERM = A.ACADEMIC_TERM
+	AND TG.ACADEMIC_SESSION = A.ACADEMIC_SESSION
+	AND TG.RECORD_TYPE = 'O'
+	AND TG.PROGRAM = '' -- some people have multiple rows in TranscriptGPA
+
+LEFT JOIN 
+	(SELECT PEOPLE_CODE_id, ACADEMIC_YEAR, ACADEMIC_TERM, ACADEMIC_SESSION
+	, SUM(CREDITS) AS [NEXT_YEAR_CREDITS]
+	 FROM ACADEMIC 
+	 GROUP BY PEOPLE_CODE_id, ACADEMIC_YEAR, ACADEMIC_TERM, ACADEMIC_SESSION
+	 ) A2
+	    ON A2.PEOPLE_CODE_ID = A.PEOPLE_CODE_ID
+		AND CONVERT(int,A2.Academic_year) = CONVERT(int,A.Academic_year) + 1 
+		AND A2.ACADEMIC_TERM = A.ACADEMIC_TERM
+		AND A2.ACADEMIC_SESSION = A.ACADEMIC_SESSION
+
+LEFT JOIN AcademicCalendar    AC
+  ON		A.Academic_year + 1 = AC.Academic_year
+  AND		A.Academic_term = AC.Academic_term
+  AND		AC.Academic_Session = '00'
+
+WHERE A.Program = 'UG'
+-- look for the last two years from the cohort_ID
+AND		A.Academic_year = CONCAT('20',SUBSTRING(SC.Cohort_id, 2, 2))
+AND		A.Academic_Term = 'Fall'
+AND		A.Academic_Session = ''
+AND		A.[status] = 'A'
+AND		A.Primary_Flag = 'Y'
+AND		A.Academic_flag = 'Y'
+-- use only cohorts starting in 2004; flagging of all students in 2000 to 2003 cohorts has not been done completely
+AND		(SC.Cohort_id IN ('F041xFR','F051xFR','F061xFR','F071xFR','F081xFR','F091xFR')
+OR		SC.Cohort_id LIKE 'F1%1xFR'
+OR		SC.Cohort_id LIKE 'F2%1xFR')  -- ready for Fall 2020 cohorts and beyond
+AND		A.Academic_year BETWEEN @StartingYear AND @EndingYear
+
+
+
+Appendix 2 – Data Dictionary
+        
+
+Appendix 3 – Data Descriptions
+
+Variable	Represents	Background
+PCID	Unique student id	
+LNAME	Student's last name	
+FNAME	Student's first name	
+YEAR	The matriculation year	Earliest year is 2004 and will automatically include later cohorts
+TERM	The matriculation term	Fall only
+COHORT	The code value that identifies the student cohort:	First digit is the student's cohort term (F = "Fall"); second and third digits identifies the last two digits of the student's cohort year ("11" = "2011"; last four values indicate the student's college attend status in initial term (1xFR = "First time")
+COHORTSTATUS		Parttime (1 to 11 credits), Fulltime (12 or more credits)
+		Parttime (1 to 11 semester credits)
+GENDER		Female, Male, n/a (for unknown/undisclosed)
+RE_FORMER	Race/Ethnicity categories prior to Fall 2010	Black
+		Alaska Native
+		Arabian American
+		Asian
+		Asian or Pacific Islander
+		Caucasian
+		Hawaiian Pacific Islander
+		Latino
+		Multi Ethnic
+		Native American
+		Non US Resident
+		n/a (for unknown/undisclosed)
+RE_CURRENT	Race/Ethnicity categories prior starting Fall 2010	The Federal categories for race/ethnicity were revised in the fall of 2010.  Since the new categories asked the leading Hispanic question, older categories couldn't be updated with the new categories.  However, returning students were asked to select their race/ethnciity in SelfService using the new categories which kept the percentage of students with unknown race/ethnicities under 8% although the former and current categories are stored in two different tables in the database.   
+		American Indian or Alaska Native
+		Asian
+		American Indian or Alaska Native
+		Asian
+		Black or African American
+		Hispanic or Latino
+		Native Hawaiian or other Pacific Islander
+		Nonresident alien
+		Two or more races
+		n/a (for unknown/undisclosed)
+		White
+FIRSTGEN	First Generation	Domestic students are asked the first generation question on their application.  However, students on visas are not asked the first generation question.  The First Generation field in the student management system has only a "Y" for students that are first generation which assumes that all of the other students are not First Generation, Since the students on a Visa aren't asked a first generation question, "n/a" is used for these students.
+		Y, N, n/a
+DEGREE		
+		BA (Bachelor of Arts)
+		BS (Bachelor of Science)
+		BSCE (Bachelor of Science in Civil Engineering)
+		BSIT (Bachelor of Science in Information Technology)
+		BSME (Bachelor of Science in Mechanical Engineering)
+		BSN (Bachelor of Nursing)
+		BSW (Bachelor of Social Work)
+MAJOR		The students' major and associated degrees are determined at the end of first term and may not reflect that major (and degree) at admittance or at the start of the first term.  Only the first major is included in the query and resulting dataset.  Some majors have ended since 2004 and other have started.  Those are annotated as such.  Majors without an annotation existed since 2004.
+		Accounting
+		Biology
+		Business Administration
+		Chemistry
+		Civil Engineering
+		Communication Studies (started in the Fall of 2014)
+		Community Services (taught out Fall 2015)
+		Computer Science
+		Criminology and Criminal Justice
+		Education
+		Educational Studies (started in the Fall of 2015)
+		Elementary Education
+		English (replaced by Literary Studies in the Fall of 2019; currently in teachout status)
+		Environmental Studies (srarted in the Fall of 2017)
+		Exercise Science (started in the Fall of 2019)
+		History
+		Humanities (taught out Spring 2010)
+		Information Technology (started in the Fall of 2017)
+		Interdisciplinary Studies (started in the Fall of 2009)
+		Literary Studies (started in the Fall of 2019)
+		Mathematics
+		Mechanical Engineering
+		Music
+		Nursing (taught out Fall of 2000; re-started in the Spring of 2016)
+		Physical Education
+		Political Science
+		Pre-Nursing (started in the Fall of 2019)
+		Psychology
+		Religious Studies
+		Secondary Education (started in the Fall of 2019)
+		Social Studies (taught out Spring 2010)
+		Social Work (started in the Fall of 2012)
+		Sociology and Cultural Anthropology
+		Special Education
+		Theatre Arts
+		Undeclared
+STEM	STEM major	Y/N.    STEM (Science, Technology, Engineering, and Mathematics) majors are Computer Science, Information Technology, Civil Engineering, Mechanical Engineering, Biology, Mathematics, and Chemistry.
+MILSTATUS	Military, veteran status	This variable denotes the students' military or veteran status or associated with the miltary at the end of the students' initial term
+		Active Duty
+		Civilian
+		Disabled Veteran
+		Disabled Veteran Spouse
+		Family Member
+		National Guard
+		Reservist
+		Veteran
+INITIALCREDITS	Enrolled credits in initial term	one or more
+COUNTY	County at accept	Student's county on their permanent address record at the time of admit
+STATE	State at accept	Student's state on their permanent address record at the time of admit
+COUNTRY	Country at accept	Student's country on their permanent addrss record at the time of admit
+HSGPA	High School GPA	0.01 to 4.00; n/a (high school GPA is not entered for students on a visa)
+ACT	ACT Compsite score	1 to 36; n/a
+FORMERSATMATH	SAT math score prior to March 2016	200 to 800; n/a
+FORMERSATREAD	SAT reading score prior to March of 2016	200 to 800; n/a
+FORMERSATWRIT	SAT writing score prior to March of 2016	200 to 800; n/a
+CURRENTSATMATH	SAT math score from March 2016 or later	200 to 800; n/a
+CURRENTSATEBRW	SAT Evidence-Based Reading Writing score from March 2016 or later	200 to 800; n/a
+ACAINDEX	Academic Index 	1 - 5, n/a.  The Academic Index is assigned to domestic students for the purpose of awarding scholarships
+PELL	Pell Grant	Y/N; Received any amount in PELL Grant in intitial term 
+WSNG	WA State Need Grant (changed to WA College Grant in the Fall of 2019)	Y/N; Received any amount in WA State Need Grant or WA College Grant in initial term)
+RESCOM	Resident, Commuter	[Resident, Commuter, Other].  This is the student's resident in their initial term.  Other is usually used when a student starts the term living in the resident hall but changes to commuter during the semester.
+TERM GPA	Student's initial term GPA	0.00 to 4.00, n/a.   Students who withdraw from all classes are assigned a term GPA of "n/a" to differentiate from students who actualy received a 0.00 term GPA. 
+RETAINED		"Y" if the student returned the following year (enrolled in credits), otherwise "N"
+RETEXCLUSION	Retention exclusion	"Y" if student is flagged as an retention exclusion prior to the end of fall term in the following year
+
+
